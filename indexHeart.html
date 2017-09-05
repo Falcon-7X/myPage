@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>冯凯的Blog主页</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="./public/styleHeart.css">
+    <script src="https://unpkg.com/vue"></script>    <!-- 引入vue第三方库 -->
+</head>
+<body>
+<div id="app">
+  <div class="main-header">
+    <div class="container">
+      <h1>大家的心里话</h1>
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="col-md-8 col-md-offset-2">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">JavaScript编程入门</h3>
+        </div>
+        <div class="panel-body">
+          <li class="list-group-item">
+              <a href="">心里话</a>
+          </li>
+          <li class="list-group-item">
+            <a>这里将要插入动态页面</a>
+          </li>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      title: 'my JS Lesson',
+    }
+  })
+</script>
+
