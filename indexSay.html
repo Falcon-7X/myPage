@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>冯凯的Blog主页</title>
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./public/styleSay.css">
+  <script src="./public/vue.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div class="main-header">
+      <div class="container">
+        <h1>API练习</h1>
+      </div>
+    </div>
+    <div class="container">
+      <!-- <div class="panel-body">
+        <div class="btn btn-primary" v-on:click="sendData">有话对老师说</div>
+      </div> -->
+
+      <form>
+        <div class="form-group">
+            <label for="name">个人姓名</label>
+            <input v-model="nameString"  type="name" class="form-control" id="name" placeholder="请输入你的姓名">
+        </div>
+        <div class="form-group">
+            <label for="account">新大账号</label>
+            <input v-model="accountString" type="account" class="form-control" id="account" placeholder="请输入你的新大账号（注册手机号码或邮箱）">
+        </div>
+        <div class="form-group">
+            <label for="content">想说的话</label>
+            <input v-model="contentString" type="content" class="form-control" id="content" placeholder="请输入你想对徐老师说的话">
+        </div>
+        <div class="checkbox">
+            <label><input type="checkbox"> 记住填写的内容 </label>
+        </div>
+        <div class="btn btn-primary" style="margin-bottom:20px" v-on:click="sendData">发送心里话</div>
+      </form>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"> 
+            <a href="./indexHeart.html">我的心里话</a>  
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="words-pannel" v-for="item in wordsList">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                    <img class="media-object avatar" v-bind:src="item.avatar" alt="...">
+                  </a>
+              </div>
+              <div class="media-body">
+                <h4 class="media-heading">
+                  {{ item.name }}
+                </h4>
+                {{ item.words }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
+<script>
+  // vue官网： https://cn.vuejs.org/v2/guide/
+  // 初始化Vue
+  var app = new Vue({
+    el: '#app',   // #app 和html中div#id的 app 对应
+    data: {
+      wordsList: [],  // 变量wordsList可以在html使用
+      nameString: '',    // 变量nameString默认空白，同步显示用户填入的“用户姓名”
+      accountString: '', // 变量accountString默认空白，同步显示用户填入的”新大账号“
+      contentString: '',  // 变量contentString默认空白，同步显示用户填入的“想说的话”
+    },
+    methods: {
+      fetchData: function() {
+        axios.get('https://js.xinshengdaxue.com/api/v1/learnJS/course/1/words')
+          .then(function (response) {
+            app.wordsList = response.data.words;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      sendData: function() {
+        axios.post('https://js.xinshengdaxue.com/api/v1/learnJS/sayToMe', {
+            // name: 'fengkai', 
+            // account: '13820597376', // 你注册新生大学的账号
+            // content: 'Hope that oneday I can work follow you, then I will be a journeyman of IT ,even to change the world and myself.' ,
+            name: app.nameString, // 拿到表单的name字段
+            account: app.accountString, // 拿到表单的account字段
+            content: app.contentString,  // 拿到表单的content字段
+        })
+        .then(function (response) {
+            console.log(response);
+            alert(response.data.code); // 浏览器弹窗 post 结果，根据 api，如果弹窗1，表示处理正常，如果是0，表示处理有错误
+            alert(response.data.message); // undefine or 没有权限？
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        alert('send'); // for test
+      }
+    }
+  });
+//   app.fetchData();
+</script>
